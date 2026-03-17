@@ -18,7 +18,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Fer.Felicity.Api/Dockerfile
+      dockerfile: Felicity.Api/Dockerfile
     container_name: felicity-api
     ports:
       - "5250:5250"

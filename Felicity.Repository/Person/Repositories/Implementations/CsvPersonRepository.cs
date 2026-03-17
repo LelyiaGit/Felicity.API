@@ -43,7 +43,7 @@ public class CsvPersonRepository : IPersonRepository
         var dir = new DirectoryInfo(baseDir);
         for (var i = 0; i < 10 && dir != null; i++)
         {
-            var repoCandidate = Path.Combine(dir.FullName, "Fer.Felicity.Repository", "Person", "Data", fileName);
+            var repoCandidate = Path.Combine(dir.FullName, "Felicity.Repository", "Person", "Data", fileName);
             if (File.Exists(repoCandidate))
             {
                 return repoCandidate;
