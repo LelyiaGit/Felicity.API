@@ -1,0 +1,33 @@
+
+services:
+
+  db:
+    image: postgres:16
+    container_name: felicity-db
+    environment:
+      POSTGRES_DB: felicitydb
+      POSTGRES_USER: felicityuser
+      POSTGRES_PASSWORD: WelcomeToFelicity
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U felicityuser -d felicitydb"]
+      interval: 2s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Fer.Felicity.Api/Dockerfile
+    container_name: felicity-api
+    ports:
+      - "5250:5250"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://+:5250
+      ConnectionStrings__DefaultConnection: Host=db;Database=felicitydb;Username=felicityuser;Password=WelcomeToFelicity;SSL Mode=Disable
+
+volumes:
+  postgres-data:
