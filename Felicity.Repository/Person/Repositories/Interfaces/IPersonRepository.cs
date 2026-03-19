@@ -5,4 +5,5 @@ namespace Felicity.Repository.Person.Repositories.Interfaces;
 public interface IPersonRepository
 {
     Task<IEnumerable<PersonEntity>> GetPersons();
+    Task<PersonEntity?> GetPerson(Guid id);
 }

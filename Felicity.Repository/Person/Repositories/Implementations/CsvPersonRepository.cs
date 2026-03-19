@@ -27,6 +27,20 @@ public class CsvPersonRepository : IPersonRepository
         return Task.FromResult<IEnumerable<PersonEntity>>(persons);
     }
 
+    public Task<PersonEntity?> GetPerson(Guid id)
+    {
+        using var reader = new StreamReader(this.csvPath);
+        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+        csv.Context.RegisterClassMap<PersonEntityMap>();
+
+        var persons = csv.GetRecords<PersonEntity>().ToList();
+
+        var found = persons.SingleOrDefault(p => p.Id == id);
+
+        return Task.FromResult(found);
+    }
+
     private static string LocateCsvPath()
     {
         const string fileName = "persons.csv";

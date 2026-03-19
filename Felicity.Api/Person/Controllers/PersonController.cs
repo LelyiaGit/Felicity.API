@@ -21,4 +21,17 @@ public class PersonController : Controller
     {
         return await this.personService.GetPersons();
     }
+
+    [HttpGet]
+    [Route("{id:guid}")]
+    public async Task<IActionResult> GetPerson(Guid id)
+    {
+        var person = await this.personService.GetPerson(id);
+        if (person == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(person);
+    }
 }
