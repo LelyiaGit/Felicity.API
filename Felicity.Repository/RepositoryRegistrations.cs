@@ -1,4 +1,5 @@
-﻿using Felicity.Repository.Employment.Repositories;
+﻿using Felicity.Repository.Employment.Repositories.Implementations;
+using Felicity.Repository.Employment.Repositories.Interfaces;
 using Felicity.Repository.Person.Repositories.Implementations;
 using Felicity.Repository.Person.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -11,28 +12,13 @@ public static class RepositoryRegistrations
 {
     public static void RegisterRepository(this IServiceCollection services, IConfiguration configuration)
     {
-        // Avoid depending on the ConfigurationBinder extension method by parsing the value manually
-        var useDatabase = false;
-        var raw = configuration["Repository:UseDatabase"];
-        if (!string.IsNullOrEmpty(raw) && bool.TryParse(raw, out var parsed))
+        services.AddDbContext<FelicityContext>(options =>
         {
-            useDatabase = parsed;
-        }
-        if (useDatabase)
-        {
-            services.AddDbContext<Data.FelicityDbContext>(options =>
-            {
-                var conn = configuration.GetConnectionString("FelicityPostgres");
-                options.UseNpgsql(conn);
-            });
+            var conn = configuration.GetConnectionString("DefaultConnection");
+            options.UseNpgsql(conn);
+        });
 
-            services.AddScoped<IPersonRepository, PostgresPersonRepository>();
-        }
-        else
-        {
-            services.AddScoped<IPersonRepository, CsvPersonRepository>();
-        }
-
-        services.AddScoped<IEmploymentRepository, EmploymentRepository>();
+        services.AddScoped<IPersonRepository, PostgressPersonRepository>();
+        services.AddScoped<IEmploymentRepository, PostgressEmploymentRepository>();
     }
 }

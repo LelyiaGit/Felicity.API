@@ -22,3 +22,12 @@ Docker
 
 Building and running the Docker container using Docker compose
 docker compose up -d --build
+
+
+Migrations
+
+dotnet ef migrations add <MIGRATION_NAME> --project Felicity.Repository --startup-project Felicity.API
+
+dotnet ef database update --project Felicity.Repository --startup-project Felicity.API
+
+dotnet ef database update --connection "Host=localhost;Port=5432;Database=felicitydb;Username=felicityuser;Password=WelcomeToFelicity;SSL Mode=Disable" --project Felicity.Repository --startup-project Felicity.API

@@ -1,6 +1,6 @@
 using Felicity.Domain.Employments.Models;
 using Felicity.Domain.Employments.Services.Interfaces;
-using Felicity.Repository.Employment.Repositories;
+using Felicity.Repository.Employment.Repositories.Interfaces;
 
 namespace Felicity.Domain.Employments.Services.Implementations;
 
@@ -19,8 +19,6 @@ internal class EmploymentService : IEmploymentService
         return entities.Select(e => new EmploymentModel
         {
             Id = e.Id,
-            CompanyName = e.CompanyName,
-            Position = e.Position,
             StartDate = e.StartDate,
             EndDate = e.EndDate,
             PersonId = e.PersonId

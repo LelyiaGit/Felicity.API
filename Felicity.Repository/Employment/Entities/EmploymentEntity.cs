@@ -8,11 +8,10 @@ namespace Felicity.Repository.Employment.Entities
 
         public Guid PersonId { get; set; }
 
-        public string CompanyName { get; set; } = string.Empty;
-        public string Position { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public string JobDescription { get; set; } = string.Empty;
 
-        public PersonEntity? Person { get; set; }
+        public PersonEntity Person { get; set; } = null!;
     }
 }
