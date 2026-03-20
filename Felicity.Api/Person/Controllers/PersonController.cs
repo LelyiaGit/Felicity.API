@@ -20,10 +20,15 @@ public class PersonController : Controller
     }
 
     [HttpGet]
-    [Route("{id:guid}")]
-    public async Task<IActionResult> GetPerson(Guid id)
+    [Route("{id}")]
+    public async Task<IActionResult> GetPerson(string id)
     {
-        var person = await this.personService.GetPerson(id);
+        if (!Guid.TryParse(id.Trim(), out var personGuid))
+        {
+            return BadRequest("Invalid GUID format");
+        }
+
+        var person = await this.personService.GetPerson(personGuid);
         if (person == null)
         {
             return NotFound();
