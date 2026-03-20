@@ -26,4 +26,14 @@ internal class PostgressPersonRepository : IPersonRepository
             .Include(p => p.Employments)
             .SingleOrDefaultAsync(p => p.Id == id);
     }
+
+    public async Task<PersonEntity?> PostPerson(PersonEntity person)
+    {
+        if (person == null) return null;
+
+        _db.Persons.Add(person);
+        await _db.SaveChangesAsync();
+
+        return person;
+    }
 }

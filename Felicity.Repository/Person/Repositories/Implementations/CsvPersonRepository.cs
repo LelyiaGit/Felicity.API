@@ -41,6 +41,12 @@ public class CsvPersonRepository : IPersonRepository
         return Task.FromResult(found);
     }
 
+    public Task<PersonEntity?> PostPerson(PersonEntity person)
+    {
+        // CSV repository is read-only for now; return null to indicate not implemented
+        return Task.FromResult<PersonEntity?>(null);
+    }
+
     private static string LocateCsvPath()
     {
         const string fileName = "persons.csv";

@@ -10,10 +10,7 @@ public class PersonController : Controller
 {
     private readonly IPersonService personService;
 
-    public PersonController(IPersonService personService)
-    {
-        this.personService = personService;
-    }
+    public PersonController(IPersonService personService) => this.personService = personService;
 
     [HttpGet]
     [Route("")]
@@ -33,5 +30,24 @@ public class PersonController : Controller
         }
 
         return Ok(person);
+    }
+
+    [HttpPost]
+    [Route("")]
+    public async Task<IActionResult> PostPerson([FromBody] PersonPostModel model)
+    {
+        if (model == null)
+        {
+            return BadRequest();
+        }
+
+        var created = await this.personService.PostPerson(model);
+        if (created == null)
+        {
+            // Validation failed or repository couldn't create
+            return BadRequest();
+        }
+
+        return CreatedAtAction(nameof(GetPerson), new { id = created.Id }, created);
     }
 }
