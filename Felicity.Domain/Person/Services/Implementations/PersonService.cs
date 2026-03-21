@@ -22,7 +22,7 @@ internal class PersonService : IPersonService
     public async Task<IEnumerable<PersonModel>> GetPersons()
     {
         var entities = await this.personRepository.GetPersons();
-        return PersonMapper.ToModels(entities); // No-op to trigger file update
+        return PersonMapper.ToModels(entities);
     }
 
     public async Task<PersonModel?> GetPerson(Guid id)

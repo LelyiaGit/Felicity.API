@@ -13,8 +13,7 @@ internal static class PersonMapper
         {
             Id = entity.Id,
             CitzenNumber = entity.CitizenNumber,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName
+            Name = entity.Name
         };
     }
 
@@ -27,8 +26,7 @@ internal static class PersonMapper
         {
             Id = postModel.Id == Guid.Empty ? Guid.NewGuid() : postModel.Id,
             CitizenNumber = postModel.CitizenNumber,
-            FirstName = postModel.FirstName,
-            LastName = postModel.LastName
+            Name = postModel.Name
         };
     }
 }

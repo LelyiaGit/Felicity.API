@@ -9,7 +9,6 @@ internal sealed class PersonEntityMap : ClassMap<PersonEntity>
     {
         Map(p => p.Id);
         Map(Map => Map.CitizenNumber);
-        Map(p => p.FirstName);
-        Map(p => p.LastName);
+        Map(p => p.Name);
     }
 }
