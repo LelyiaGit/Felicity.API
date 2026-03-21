@@ -15,7 +15,7 @@ public class CsvPersonRepository : IPersonRepository
         this.csvPath = LocateCsvPath();
     }
 
-    public Task<IEnumerable<PersonEntity>> GetPersons()
+    public Task<IEnumerable<PersonEntity>> GetPersons(CancellationToken ct)
     {
         using var reader = new StreamReader(this.csvPath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
@@ -27,7 +27,7 @@ public class CsvPersonRepository : IPersonRepository
         return Task.FromResult<IEnumerable<PersonEntity>>(persons);
     }
 
-    public Task<PersonEntity?> GetPerson(Guid id)
+    public Task<PersonEntity?> GetPerson(Guid id, CancellationToken ct)
     {
         using var reader = new StreamReader(this.csvPath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
@@ -41,10 +41,15 @@ public class CsvPersonRepository : IPersonRepository
         return Task.FromResult(found);
     }
 
-    public Task<PersonEntity?> PostPerson(PersonEntity person)
+    public Task<PersonEntity?> PostPerson(PersonEntity person, CancellationToken ct)
     {
         // CSV repository is read-only for now; return null to indicate not implemented
         return Task.FromResult<PersonEntity?>(null);
+    }
+
+    public Task<PersonEntity?> PutPerson(PersonEntity person, CancellationToken ct)
+    {
+        throw new NotImplementedException();
     }
 
     private static string LocateCsvPath()

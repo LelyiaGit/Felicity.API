@@ -13,6 +13,7 @@ internal static class PersonRegistrations
     {
         services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IValidator<PersonPostModel>, PersonPostModelValidator>();
+        services.AddScoped<IValidator<PersonPutModel>, PersonPutModelValidator>();
 
         return services;
     }

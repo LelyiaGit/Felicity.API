@@ -1,6 +1,7 @@
-﻿using Felicity.Domain.Person.Services.Interfaces;
+﻿using Felicity.Domain.Person.Models;
+using Felicity.Domain.Person.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Felicity.Domain.Person.Models;
 
 namespace Felicity.Api.Person.Controllers;
 
@@ -54,5 +55,29 @@ public class PersonController : Controller
         }
 
         return CreatedAtAction(nameof(GetPerson), new { id = created.Id }, created);
+    }
+
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<IActionResult> PutPerson(string id, [FromBody] PersonPutModel model)
+    {
+        if (!Guid.TryParse(id.Trim(), out var personGuid))
+        {
+            return BadRequest("Invalid GUID format");
+        }
+
+        if (model == null)
+        {
+            return BadRequest();
+        }
+
+        var putResult = await this.personService.PutPerson(personGuid, model);
+
+        if (putResult == null)
+        {
+            return BadRequest();
+        }
+
+        return Ok(putResult);
     }
 }

@@ -17,9 +17,9 @@ internal class PersonPostModelValidator : AbstractValidator<PersonPostModel>
                 .WithMessage("A person with the same Id already exists.");
     }
 
-    private async Task<bool> IdMustBeUnique(Guid id, CancellationToken cancellationToken)
+    private async Task<bool> IdMustBeUnique(Guid id, CancellationToken ct)
     {
-        var existing = await this.personRepository.GetPerson(id);
+        var existing = await this.personRepository.GetPerson(id, ct);
         return existing == null;
     }
 }

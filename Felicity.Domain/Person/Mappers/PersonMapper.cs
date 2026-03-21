@@ -1,4 +1,6 @@
-﻿using Felicity.Domain.Person.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Felicity.Domain.Person.Models;
 using Repo = Felicity.Repository.Person.Entities;
 
 namespace Felicity.Domain.Person.Mappers;
@@ -27,6 +29,15 @@ internal static class PersonMapper
             Id = postModel.Id == Guid.Empty ? Guid.NewGuid() : postModel.Id,
             CitizenNumber = postModel.CitizenNumber,
             Name = postModel.Name
+        };
+    }
+    public static Repo.PersonEntity ToEntity(PersonPutModel putModel, Guid id)
+    {
+        return new Repo.PersonEntity
+        {
+            Id = id,
+            CitizenNumber = putModel.CitizenNumber,
+            Name = putModel.Name
         };
     }
 }

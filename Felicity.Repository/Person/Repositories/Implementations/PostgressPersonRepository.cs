@@ -13,27 +13,47 @@ internal class PostgressPersonRepository : IPersonRepository
         _db = db;
     }
 
-    public async Task<IEnumerable<PersonEntity>> GetPersons()
+    public async Task<IEnumerable<PersonEntity>> GetPersons(CancellationToken ct)
     {
         return await _db.Persons
+            .AsNoTracking()
             .Include(p => p.Employments)
-            .ToListAsync();
+            .ToListAsync(ct);
     }
 
-    public async Task<PersonEntity?> GetPerson(Guid id)
+    public async Task<PersonEntity?> GetPerson(Guid id, CancellationToken ct)
     {
         return await _db.Persons
-            .Include(p => p.Employments)
-            .SingleOrDefaultAsync(p => p.Id == id);
+          .AsNoTracking()
+          .Include(p => p.Employments)
+          .FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
-    public async Task<PersonEntity?> PostPerson(PersonEntity person)
+    public async Task<PersonEntity?> PostPerson(PersonEntity person, CancellationToken ct)
     {
-        if (person == null) return null;
+        ArgumentNullException.ThrowIfNull(person);
 
         _db.Persons.Add(person);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
 
         return person;
+    }
+
+    public async Task<PersonEntity?> PutPerson(PersonEntity person, CancellationToken ct)
+    {
+        ArgumentNullException.ThrowIfNull(person);
+
+        var existing = await _db.Persons
+            .FirstOrDefaultAsync(p => p.Id == person.Id, ct);
+
+        if (existing == null)
+            return null;
+
+        existing.Name = person.Name;
+        existing.CitizenNumber = person.CitizenNumber;
+
+        await _db.SaveChangesAsync(ct);
+
+        return existing;
     }
 }
