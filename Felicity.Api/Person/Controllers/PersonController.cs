@@ -1,6 +1,5 @@
 ﻿using Felicity.Domain.Person.Models;
 using Felicity.Domain.Person.Services.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Felicity.Api.Person.Controllers;
@@ -54,7 +53,7 @@ public class PersonController : Controller
             return BadRequest();
         }
 
-        return CreatedAtAction(nameof(GetPerson), new { id = created.Id }, created);
+        return CreatedAtAction(nameof(GetPerson), new { id = created.Id.ToString() }, created);
     }
 
     [HttpPut]

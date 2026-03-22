@@ -1,11 +1,11 @@
-using Felicity.Domain.Employments.Services.Interfaces;
 using Felicity.Domain.Employments.Models;
+using Felicity.Domain.Employments.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Felicity.Api.Employment.Controllers;
 
 [ApiController]
-[Route("employments")]
+[Route("persons/{personId}/employments")]
 public class EmploymentController : Controller
 {
     private readonly IEmploymentService employmentService;
@@ -17,8 +17,55 @@ public class EmploymentController : Controller
 
     [HttpGet]
     [Route("")]
-    public async Task<IEnumerable<EmploymentModel>> GetEmployments()
+    public async Task<IActionResult> GetEmployments(string personId)
     {
-        return await this.employmentService.GetEmployments();
+        if (string.IsNullOrWhiteSpace(personId) || !Guid.TryParse(personId.Trim(), out var personGuid))
+            return BadRequest("Invalid GUID format");
+
+        var list = await this.employmentService.GetEmployments(personGuid);
+        return Ok(list);
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> GetEmployment(string personId, string id)
+    {
+        if (string.IsNullOrWhiteSpace(personId) || !Guid.TryParse(personId.Trim(), out var personGuid))
+            return BadRequest("Invalid GUID format");
+
+        if (!Guid.TryParse(id.Trim(), out var employmentGuid))
+            return BadRequest("Invalid GUID format");
+        
+
+        var person = await this.employmentService.GetEmployment(employmentGuid);
+        if (person == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(person);
+    }
+
+    [HttpPost]
+    [Route("")]
+    public async Task<IActionResult> PostEmployment(string personId, [FromBody] EmploymentPostModel model)
+    {
+        if (string.IsNullOrWhiteSpace(personId) || !Guid.TryParse(personId.Trim(), out var personGuid))
+            return BadRequest("Invalid GUID format");
+
+        if (model == null)
+        {
+            return BadRequest();
+        }
+
+        var created = await this.employmentService.PostEmployment(personGuid, model);
+        if (created == null)
+        {
+            // Validation failed or repository couldn't create
+            return BadRequest();
+        }
+
+        // Provide both route values: personId is part of the controller route and is required
+        return CreatedAtAction(nameof(GetEmployment), new { personId = personGuid, id = created.Id }, created);
     }
 }
