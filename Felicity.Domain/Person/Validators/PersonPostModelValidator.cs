@@ -15,6 +15,10 @@ internal class PersonPostModelValidator : AbstractValidator<PersonPostModel>
         RuleFor(obj => obj.Id)
             .MustAsync(IdMustBeUnique)
                 .WithMessage("A person with the same Id already exists.");
+
+        RuleFor(obj => obj.Name)
+            .NotEmpty()
+                .WithMessage("Name is required.");
     }
 
     private async Task<bool> IdMustBeUnique(Guid id, CancellationToken ct)
