@@ -8,4 +8,5 @@ public interface IPersonRepository
     Task<PersonEntity?> GetPerson(Guid id, CancellationToken ct);
     Task<PersonEntity?> PostPerson(PersonEntity person, CancellationToken ct);
     Task<PersonEntity?> PutPerson(PersonEntity person, CancellationToken ct);
+    Task DeletePerson(Guid id, CancellationToken ct);
 }

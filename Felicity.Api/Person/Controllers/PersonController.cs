@@ -79,4 +79,23 @@ public class PersonController : Controller
 
         return Ok(putResult);
     }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<IActionResult> DeletePerson(string id)
+    {
+        if (!Guid.TryParse(id.Trim(), out var personGuid))
+        {
+            return BadRequest("Invalid GUID format");
+        }
+
+        var deleteResult = await this.personService.DeletePerson(personGuid);
+
+        if (deleteResult == null)
+        {
+            return BadRequest();
+        }
+
+        return Ok(deleteResult);
+    }
 }

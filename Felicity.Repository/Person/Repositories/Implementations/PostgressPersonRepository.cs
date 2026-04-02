@@ -56,4 +56,15 @@ internal class PostgressPersonRepository : IPersonRepository
 
         return existing;
     }
+
+    public async Task DeletePerson(Guid id, CancellationToken ct)
+    {
+        var existing = await _db.Persons.FirstOrDefaultAsync(p => p.Id == id, ct);
+
+        if (existing != null)
+        {
+            _db.Persons.Remove(existing);
+            await _db.SaveChangesAsync(ct);
+        }
+    }
 }

@@ -3,6 +3,7 @@ using Felicity.Domain.Person.Services.Interfaces;
 using Felicity.Repository.Person.Repositories.Interfaces;
 using Felicity.Domain.Person.Mappers;
 using FluentValidation;
+using Felicity.Domain.Infrastructure.Classes;
 
 namespace Felicity.Domain.Person.Services.Implementations;
 
@@ -82,5 +83,12 @@ internal class PersonService : IPersonService
         var putResult = await this.personRepository.PutPerson(personEntity, new CancellationToken());
         
         return putResult is null ? null : PersonMapper.ToModel(putResult);
+    }
+
+    public async Task<OperationResult<NoResult>> DeletePerson(Guid id)
+    {
+        await this.personRepository.DeletePerson(id, new CancellationToken());
+
+        return new OperationResult<NoResult>();
     }
 }

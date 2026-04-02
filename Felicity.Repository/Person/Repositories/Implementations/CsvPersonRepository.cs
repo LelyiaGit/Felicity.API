@@ -93,4 +93,9 @@ public class CsvPersonRepository : IPersonRepository
 
         throw new FileNotFoundException($"Could not locate '{fileName}'. Looked in: {baseDir} and parent repositories. Ensure the file exists or is copied to the output directory.");
     }
+
+    public Task DeletePerson(Guid id, CancellationToken ct)
+    {
+        throw new NotImplementedException();
+    }
 }
