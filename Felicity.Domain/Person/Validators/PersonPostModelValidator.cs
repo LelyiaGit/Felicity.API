@@ -13,12 +13,19 @@ internal class PersonPostModelValidator : AbstractValidator<PersonPostModel>
         this.personRepository = personRepository;
 
         RuleFor(obj => obj.Id)
+            .Must(BeValidGuid)
+                .WithMessage("Id must be a valid GUID.")
             .MustAsync(IdMustBeUnique)
                 .WithMessage("A person with the same Id already exists.");
 
         RuleFor(obj => obj.Name)
             .NotEmpty()
                 .WithMessage("Name is required.");
+    }
+
+    private bool BeValidGuid(Guid id)
+    {
+        return id != Guid.Empty;
     }
 
     private async Task<bool> IdMustBeUnique(Guid id, CancellationToken ct)

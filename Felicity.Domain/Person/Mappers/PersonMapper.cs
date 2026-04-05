@@ -26,7 +26,7 @@ internal static class PersonMapper
     {
         return new Repo.PersonEntity
         {
-            Id = postModel.Id == Guid.Empty ? Guid.NewGuid() : postModel.Id,
+            Id = postModel.Id,
             CitizenNumber = postModel.CitizenNumber,
             Name = postModel.Name
         };
