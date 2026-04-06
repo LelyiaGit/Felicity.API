@@ -7,4 +7,5 @@ public interface IEmploymentRepository
     Task<IEnumerable<EmploymentEntity>> GetEmployments(CancellationToken ct);
     Task<EmploymentEntity?> GetEmployment(Guid id, CancellationToken ct);
     Task<EmploymentEntity?> PostEmployment(EmploymentEntity employment, CancellationToken ct);
+    Task DeleteEmployment(Guid id, CancellationToken ct);
 }

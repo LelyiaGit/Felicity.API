@@ -27,13 +27,13 @@ public class EmploymentController : Controller
     }
 
     [HttpGet]
-    [Route("{id}")]
-    public async Task<IActionResult> GetEmployment(string personId, string id)
+    [Route("{employmentId}")]
+    public async Task<IActionResult> GetEmployment(string personId, string employmentId)
     {
         if (string.IsNullOrWhiteSpace(personId) || !Guid.TryParse(personId.Trim(), out var personGuid))
             return BadRequest("Invalid GUID format");
 
-        if (!Guid.TryParse(id.Trim(), out var employmentGuid))
+        if (!Guid.TryParse(employmentId.Trim(), out var employmentGuid))
             return BadRequest("Invalid GUID format");
         
 
@@ -67,5 +67,24 @@ public class EmploymentController : Controller
 
         // Provide both route values: personId is part of the controller route and is required
         return CreatedAtAction(nameof(GetEmployment), new { personId = personGuid, id = created.Id }, created);
+    }
+
+    [HttpDelete]
+    [Route("{employmentId}")]
+    public async Task<IActionResult> DeleteEmployment(string personId, string employmentId)
+    {
+        if (string.IsNullOrWhiteSpace(personId) || !Guid.TryParse(personId.Trim(), out var personGuid))
+            return BadRequest("Invalid GUID format");
+
+        if (!Guid.TryParse(employmentId.Trim(), out var employmentGuid))
+            return BadRequest("Invalid GUID format");
+
+        var deleted = await this.employmentService.DeleteEmployment(personGuid, employmentGuid);
+        if (!deleted.Success)
+        {
+            return BadRequest();
+        }
+
+        return Ok();
     }
 }

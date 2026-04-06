@@ -13,5 +13,6 @@ internal static class EmploymentRegistrations
     {
         services.AddScoped<IEmploymentService, EmploymentService>();
         services.AddScoped<IValidator<EmploymentPostModel>, EmploymentPostModelValidator>();
+        services.AddScoped<IValidator<EmploymentDeleteModel>, EmploymentDeleteModelValidator>();
     }
 }

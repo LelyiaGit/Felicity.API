@@ -37,4 +37,15 @@ internal class PostgressEmploymentRepository : IEmploymentRepository
 
         return employment;
     }
+
+    public async Task DeleteEmployment(Guid id, CancellationToken ct)
+    {
+        var entityToDelete = _db.Employments.SingleOrDefault(e => e.Id == id);
+
+        if(entityToDelete != null)
+        {
+            _db.Employments.Remove(entityToDelete);
+            await _db.SaveChangesAsync();
+        }
+    }
 }
