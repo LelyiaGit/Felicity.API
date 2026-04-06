@@ -15,7 +15,7 @@ internal static class EmploymentMapper
         return new EmploymentModel
         {
             Id = entity.Id,
-            Description = entity.JobDescription,
+            Description = entity.JobTitle,
             StartDate = DateTime.SpecifyKind(entity.StartDate, DateTimeKind.Utc),
             EndDate = entity.EndDate.HasValue ? DateTime.SpecifyKind(entity.EndDate.Value, DateTimeKind.Utc) : null
         };
@@ -29,7 +29,7 @@ internal static class EmploymentMapper
         return new Repo.EmploymentEntity
         {
             Id = Guid.NewGuid(),
-            JobDescription = postModel.Description,
+            JobTitle = postModel.JobTitle,
             StartDate = DateTime.SpecifyKind(postModel.StartDate, DateTimeKind.Utc),
             EndDate = postModel.EndDate.HasValue ? DateTime.SpecifyKind(postModel.EndDate.Value, DateTimeKind.Utc) : null,
             PersonId = personId

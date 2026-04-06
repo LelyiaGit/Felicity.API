@@ -13,10 +13,10 @@ internal class EmploymentPostModelValidator : AbstractValidator<EmploymentPostMo
     {
         this.employmentRepository = employmentRepository;
 
-        RuleFor(obj => obj.Description)
+        RuleFor(obj => obj.JobTitle)
             .NotEmpty()
-                .WithMessage("Description may not be empty.")
+                .WithMessage("{Property} may not be empty.")
             .MaximumLength(100)
-                .WithMessage("Description may not be more than 100 characters long.");
+                .WithMessage("{Property} may not be more than 100 characters long.");
     }
 }

@@ -10,7 +10,7 @@ namespace Felicity.Repository.Employment.Entities
 
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public string JobDescription { get; set; } = string.Empty;
+        public string JobTitle { get; set; } = string.Empty;
 
         public PersonEntity Person { get; set; } = null!;
     }
