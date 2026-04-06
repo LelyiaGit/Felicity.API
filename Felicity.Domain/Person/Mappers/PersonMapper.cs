@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Felicity.Domain.Person.Models;
+﻿using Felicity.Domain.Person.Models;
 using Repo = Felicity.Repository.Person.Entities;
 
 namespace Felicity.Domain.Person.Mappers;
@@ -14,7 +12,7 @@ internal static class PersonMapper
         return new PersonModel
         {
             Id = entity.Id,
-            CitzenNumber = entity.CitizenNumber,
+            CitizenNumber = entity.CitizenNumber,
             Name = entity.Name
         };
     }
