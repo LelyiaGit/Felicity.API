@@ -1,6 +1,7 @@
 using Felicity.Domain.Employments.Models;
 using Felicity.Domain.Employments.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Felicity.Api.Employment.Controllers;
 
@@ -65,8 +66,10 @@ public class EmploymentController : Controller
             return BadRequest();
         }
 
-        // Provide both route values: personId is part of the controller route and is required
-        return CreatedAtAction(nameof(GetEmployment), new { personId = personGuid, id = created.Id }, created);
+        return CreatedAtAction(nameof(GetEmployment),
+            new { personId = personId, employmentId = created.Id },
+            created
+        );
     }
 
     [HttpDelete]
