@@ -1,8 +1,5 @@
 ﻿namespace Felicity.Domain.Person.Models;
 
-public class PersonPutModel
+public class PersonPutModel : PersonBaseModel
 {
-    public int CitizenNumber { get; set; }
-    public string Name { get; set; } = string.Empty;
-
 }

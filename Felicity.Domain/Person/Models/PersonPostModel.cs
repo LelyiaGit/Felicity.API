@@ -1,8 +1,6 @@
 ﻿namespace Felicity.Domain.Person.Models;
 
-public class PersonPostModel
+public class PersonPostModel : PersonBaseModel
 {
     public Guid Id { get; set; }
-    public int? CitizenNumber { get; set; }
-    public string Name { get; set; } = string.Empty;
 }
