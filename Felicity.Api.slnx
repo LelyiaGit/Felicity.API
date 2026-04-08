@@ -5,6 +5,7 @@
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Felicity.Api.Tests/Felicity.Api.Tests.csproj" Id="4b49840f-872f-4148-adfb-bdfefd67ed63" />
+    <Project Path="Felicity.Domain.Tests/Felicity.Domain.Tests.csproj" Id="416d53be-f714-4ef2-8d60-f105a5e01083" />
   </Folder>
   <Project Path="Felicity.Api/Felicity.Api.csproj" />
   <Project Path="Felicity.Domain/Felicity.Domain.csproj" />
