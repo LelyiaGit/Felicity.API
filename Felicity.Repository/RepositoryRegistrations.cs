@@ -2,6 +2,8 @@
 using Felicity.Repository.Employment.Repositories.Interfaces;
 using Felicity.Repository.Person.Repositories.Implementations;
 using Felicity.Repository.Person.Repositories.Interfaces;
+using Felicity.Repository.TaxPayment.Repositories.Implementations;
+using Felicity.Repository.TaxPayment.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,5 +22,6 @@ public static class RepositoryRegistrations
 
         services.AddScoped<IPersonRepository, PostgressPersonRepository>();
         services.AddScoped<IEmploymentRepository, PostgressEmploymentRepository>();
+        services.AddScoped<ITaxPaymentRepository, PostgressTaxPaymentRepository>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Felicity.Domain.Employments;
 using Felicity.Domain.Person;
+using Felicity.Domain.TaxPayment;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Felicity.Domain;
@@ -10,5 +11,6 @@ public static class DomainRegistrations
     {
         services.RegisterPersonDomain();
         services.RegisterEmploymentDomain();
+        services.RegisterTaxPaymentDomain();
     }
 }
